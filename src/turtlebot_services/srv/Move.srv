@@ -1,0 +1,3 @@
+duration duration #Duration to move the robot randomly
+---
+bool success #Return when the time has finished

@@ -16,14 +16,20 @@ $ mkdir -p ~/catkin_ws/src
 $ cd ~/catkin_ws/
 $ catkin_make
 ```
-2. Download the repository and paste the "tutorial_name/src" in /src file.
+2. Download the repository insider the /src file of the workspace
+```sh
+$ cd /src
+$ git clone https://github.com/aflores-c/ROSCPP.git
+```
 3. Make again and check all compiles correctly.
 ```sh
+$ cd ..
 $ catkin_make
 ``` 
 ## Tutorials
 
-### 01_Obstacle Avoidance - Publishers and subsrbers
+### 01_Publishers and subscribers
+### src/turtlebot_obstacles
 #### Overview
 In this tutorial, a gazebo simulation is used to work with the turtlebot robot.
 We create a node that subscribes to the /scan to read the distances from the objects.

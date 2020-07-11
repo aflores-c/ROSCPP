@@ -81,4 +81,3 @@ void Turtlebot_Controller::initialize_velocity()
     linear_angular_vel_.linear.x = 0.0;
     vel_pub_.publish(linear_angular_vel_);
 }
-

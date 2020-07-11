@@ -1,7 +1,8 @@
 # ROSCPP
 You can find a set of basics ROS C++ tutorials. 
+In this tutorials, a gazebo simulation is used to work with the turtlebot robot.
 
-## Requierments
+## Requierements
 You need to install ROS Melodic , wich you can find in the offical page. Aditionally, you need the turtlebot 3 simulator, that will be covered in the video tutorial.
 By now, I put the installation links.
 1. Ubuntu 18  
@@ -31,8 +32,7 @@ $ catkin_make
 ### 01_Publishers and subscribers
 ### src/turtlebot_obstacles
 #### Overview
-In this tutorial, a gazebo simulation is used to work with the turtlebot robot.
-We create a node that subscribes to the /scan to read the distances from the objects.
+We create a node that subscribes to the /scan topic to read the distances from the robot to the obstacles.
 Then, the node uses this data to avoid obstacles by publishing velocity commands to the /cmd_vel topic to move the robot.
 
 [turtlebot_gazebo]: ./images/turtlebot_obst_avoid.png
@@ -47,14 +47,49 @@ Then, the node uses this data to avoid obstacles by publishing velocity commands
 $ cd catkin_ws
 $ cd source devel/setup.bash
 ```
+2. Launch the simulator. We need to choose the robot. In this case, we use the waffle turtlebot robot. 
+```sh
+$ export TURTLEBOT3_MODEL=waffle
+$ roslaunch turtlebot3_gazebo turtlebot3_world.launch
+```
+3. In another terminal, run the "avoid_obstacle" node
+```sh
+$ rosrun turtlebot_obstacles turtlebot_obstacles_node
+```
+### 02_ROS Services
+### src/turtlebot_services
+#### Overview
+We modified the previous turtlebot controller class and we add a service member function. We write a server node to run the service and a service client to call the service.
+
+[turtlebot_gazebo_2]: ./images/services.png
+[topics_graph_2]: ./images/rqt_services.png
+
+![alt text][turtlebot_gazebo_2]
+![alt text][topics_graph_2]
+
+#### Usage 
+1. Source your environment
+```sh
+$ cd catkin_ws
+$ cd source devel/setup.bash
+```
 2. Launch the simulator
 ```sh
-$ rosrun turtlebot_obstacles turtlebot_obstacles_node
+$ export TURTLEBOT3_MODEL=waffle
+$ roslaunch turtlebot3_gazebo turtlebot3_world.launch
 ```
-3. in other terminal, run the "avoid_obstacle" node
+3. In another terminal, run the "avoid_obstacle" node
 ```sh
-$ rosrun turtlebot_obstacles turtlebot_obstacles_node
+$ rosrun turtlebot_services turtlebot_services_node
 ```
-
-
-
+4. You can see the available services and then you can call that services.
+```sh
+$ rosservice list
+$ rosservice call /move_robot "duration:
+  secs: 15
+  nsecs: 0" 
+```
+5. There is another way to call the services. It is done by running a service client.
+```sh
+$ rosrun turtlebot_services turtlebot_services_client 
+```

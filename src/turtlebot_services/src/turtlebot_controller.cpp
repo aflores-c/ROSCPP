@@ -7,7 +7,6 @@ Turtlebot_Controller::Turtlebot_Controller() : rate(5)
     vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
     move_robot = nh_.advertiseService("move_robot", &Turtlebot_Controller::MoveRobotService, this);
     driving_forward = 1;
-    initialize_velocity();
 }
 
 void Turtlebot_Controller::scan_callback(const sensor_msgs::LaserScan::ConstPtr &scan_msg)
@@ -23,7 +22,7 @@ void Turtlebot_Controller::scan_callback(const sensor_msgs::LaserScan::ConstPtr 
         distances.push_back(scan_msg->ranges[min_pos + i]); // get all the distances
     }
     distance_ = *std::min_element(distances.begin(), distances.end()); //obtain the minimun distance
-    distances.clear(); //reset the distances
+    distances.clear();                                                 //reset the distances
 }
 
 bool Turtlebot_Controller::MoveRobotService(turtlebot_services::MoveRequest &request, turtlebot_services::MoveResponse &response)
@@ -32,10 +31,8 @@ bool Turtlebot_Controller::MoveRobotService(turtlebot_services::MoveRequest &req
     ros::Time start = ros::Time::now();
     ros::Time endwait = start + request.duration;
 
-    
     while (start < endwait)
     {
-
         if (driving_forward)
         {
             if (distance_ < 0.4 || ros::Time::now() > time_state)
@@ -73,6 +70,7 @@ bool Turtlebot_Controller::MoveRobotService(turtlebot_services::MoveRequest &req
         rate.sleep();
     }
     initialize_velocity();
+    vel_pub_.publish(linear_angular_vel_);
     response.success = 1;
     return true;
 }
@@ -81,4 +79,6 @@ void Turtlebot_Controller::initialize_velocity()
 {
     linear_angular_vel_.angular.z = 0.0;
     linear_angular_vel_.linear.x = 0.0;
+    vel_pub_.publish(linear_angular_vel_);
 }
+

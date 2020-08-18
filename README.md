@@ -60,6 +60,7 @@ $ rosrun turtlebot_obstacles turtlebot_obstacles_node
 ### src/turtlebot_services
 #### Overview
 We modified the previous turtlebot controller class and we add a service member function. This server function will allow to move the robot randomly, as we've seen in the previous tutorial. Now, the robot just use the callback to get the distance and you can call the service to move the robot. You request to move a robot for a certain duration and when the duration finishes, the service returns a response of success. 
+
 [turtlebot_gazebo_2]: ./images/services.png
 [topics_graph_2]: ./images/rqt_services.png
 

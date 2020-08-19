@@ -93,3 +93,32 @@ $ rosservice call /move_robot "duration:
 ```sh
 $ rosrun turtlebot_services turtlebot_services_client 
 ```
+
+### 02_LANE DETECTION WITH TURTLEBOT AND OPENCV
+### src/turtlebot_vision
+#### Overview
+We use OPENCV to detect the lane in the Autorace world. Furthermore, a basic proportional controller is implemented, to move the robot. 
+
+[turtlebot_lane_detection]: ./images/lane_detection.png
+
+![alt text][turtlebot_lane_detection]
+
+#### Usage 
+
+0.First, paste the turtlebot3_autorace2.launch inside src/turtlebot3_simulations/turtlebot3_gazebo/launch/.
+
+1. Source your environment
+```sh
+$ cd catkin_ws
+$ cd source devel/setup.bash
+```
+2. Launch the simulator
+```sh
+$ export TURTLEBOT3_MODEL=waffle
+$ roslaunch turtlebot3_gazebo turtlebot3_autorace2.launch
+```
+3. In another terminal, run the "turtlebot_vision" node. This node subscribes to the /camera_callback topic and process the images to detect the lanes.
+```sh
+$ rosrun turtlebot_vision turtlebot_vision_node
+```
+
